@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct TodoAppApp: App {
+    @StateObject var authVM = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
+                .environmentObject(authVM)
         }
     }
 }
