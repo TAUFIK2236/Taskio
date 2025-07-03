@@ -7,9 +7,11 @@
 
 import Foundation
 
-struct Todo : Identifiable, Codable {
-    var id : String
-    var task : String
-    var description : String
-    var isDone: Bool
+struct Todo: Identifiable, Codable {
+    let id: String
+    let task: String
+    let description: String
+    let isDone: Bool
 }
+
+
