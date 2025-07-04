@@ -52,17 +52,10 @@ struct ProfileView: View {
 
                 // Buttons
                 VStack(spacing: h * 0.015) {
-                    Button(action: {}) {
-                        Text("Change Name")
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: h * 0.06)
-                            .background(Color.white)
-                            .overlay(RoundedRectangle(cornerRadius: w * 0.03).stroke(Color.gray.opacity(0.4)))
-                    }
 
+                    Spacer()
                     Button(action: {}) {
-                        Text("Change Password")
+                        Text("Change Password and Name")
                             .foregroundColor(.black)
                             .frame(maxWidth: .infinity)
                             .frame(height: h * 0.06)

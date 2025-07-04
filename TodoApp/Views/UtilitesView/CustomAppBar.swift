@@ -48,5 +48,6 @@ struct CustomAppBar: View {
         .padding(.top,12)
         .background(Color.white)
         .ignoresSafeArea(.all,edges: .top)
+        .frame(height: 95)
     }
 }

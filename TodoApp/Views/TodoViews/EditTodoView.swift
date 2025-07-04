@@ -40,7 +40,7 @@ struct EditTodoView: View {
                     Text("Description")
                         .font(.system(size: w * 0.045))
                     TextEditor(text: $description)
-                        .frame(height: h * 0.2)
+                        .frame(height: h * 0.4)
                         .padding(6)
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(w * 0.03)
@@ -48,7 +48,7 @@ struct EditTodoView: View {
                     Spacer()
 
                     // Save Button
-                    NavigationLink(destination: TaskDetailsView(), isActive: $goToTodoView) {
+                   
                         Button(action: {
                             // You could call an update API here if needed
                             goToTodoView = true
@@ -57,11 +57,12 @@ struct EditTodoView: View {
                                 .foregroundColor(.white)
                                 .font(.system(size: w * 0.05, weight: .semibold))
                                 .frame(maxWidth: .infinity)
-                                .frame(height: h * 0.06)
+                                .frame(height: h * 0.08)
                                 .background(Color.black)
-                                .cornerRadius(w * 0.03)
+                                .cornerRadius(w * 0.05)
+                                .padding(5)
                         }
-                    }
+                    
                 }
                 .padding(.horizontal, w * 0.06)
                 .navigationDestination(isPresented: $goToTodoView) {
