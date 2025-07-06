@@ -63,7 +63,7 @@ struct RegisterView: View {
                                 .frame(width: geometry.size.width * 0.85)
                                 .padding(.bottom)
 
-                            NavigationLink(destination: HomeView(userId: ""), isActive: $navigateToHome) {
+                            NavigationLink(destination: HomeView(), isActive: $navigateToHome) {
                                 Button(action: {
                                     navigateToHome = true
                                 }) {

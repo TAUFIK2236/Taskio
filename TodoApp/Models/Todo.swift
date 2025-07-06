@@ -11,4 +11,6 @@ struct Todo: Codable, Identifiable {
     var id: String { _id } // So we can use it in ForEach
 }
 
-
+struct TodoResponse: Codable {
+    let todos: [Todo]
+}

@@ -10,7 +10,7 @@ struct TodoAppApp: App {
         WindowGroup {
             if session.isLoggedIn {
                 NavigationView {
-                    HomeView(userId: "234")
+                    HomeView1()
                 }.environmentObject(session)
             }else{
                 NavigationView {

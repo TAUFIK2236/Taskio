@@ -1,61 +1,63 @@
-//
-//  SwiftUIView.swift
-//  TodoApp
-//
-//  Created by Anika Tabasum on 7/4/25.
-//
-
-// Regular class — each view creates its own instance
-class RegularCounter {
-    var count = 0
-
-    func increase() {
-        count += 1
-    }
-}
-
-// Singleton class — shared instance across app
-class SingletonCounter {
-    static let shared = SingletonCounter()
-    private init() {}
-
-    var count = 0
-
-    func increase() {
-        count += 1
-    }
-}
-
 import SwiftUI
 
-struct CounterComparisonView: View {
-    // New instance of regular class
-    @State private var regularCounter = RegularCounter()
-    @State private var regularCount = 0
-
-    // Access singleton directly
-    @State private var singletonCount = SingletonCounter.shared.count
+struct HomeView1: View {
+    @EnvironmentObject var session: UserSession
+    @StateObject private var todoVM = TodoViewModel()
 
     var body: some View {
-        VStack(spacing: 30) {
-            Text("Regular Counter: \(regularCount)")
-            Button("Increase Regular") {
-                regularCounter.increase()
-                regularCount = regularCounter.count
+        NavigationStack {
+            VStack(alignment: .leading) {
+                Text("Hi, \(session.username)!")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top)
+
+                Text("You have \(todoVM.todos.count) tasks")
+                    .foregroundColor(.gray)
+                    .padding(.bottom)
+
+                List {
+                    ForEach(todoVM.todos) { todo in
+                        HStack {
+                            Image(systemName: todo.completed ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(todo.completed ? .green : .gray)
+                                .onTapGesture {
+                                    if todo.completed {
+                                        todoVM.unmarkTodo(todoId: todo._id, userId: session.userId)
+                                    } else {
+                                        todoVM.markTodoDone(todoId: todo._id, userId: session.userId)
+                                    }
+                                }
+
+                            VStack(alignment: .leading) {
+                                Text(todo.title)
+                                    .font(.headline)
+                                Text(todo.description)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+
+                            Spacer()
+
+                            Button(role: .destructive) {
+                                todoVM.deleteTodo(todoId: todo._id, userId: session.userId)
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+                .listStyle(.plain)
+            }
+            .padding(.horizontal)
+            .navigationTitle("Tasks")
+            .onAppear {
+                print("User ID in HomeView: \(session.userId)")
+                todoVM.fetchTodos(for: session.userId)
             }
 
-            Divider()
-
-            Text("Singleton Counter: \(singletonCount)")
-            Button("Increase Singleton") {
-                SingletonCounter.shared.increase()
-                singletonCount = SingletonCounter.shared.count
-            }
         }
-        .padding()
-        .font(.title2)
     }
 }
-#Preview {
-    CounterComparisonView()
-}
+

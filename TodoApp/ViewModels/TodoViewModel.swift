@@ -51,18 +51,26 @@ class TodoViewModel: ObservableObject {
         URLSession.shared.dataTask(with: url) { data, _, error in
             DispatchQueue.main.async {
                 if let data = data {
-                    if let decoded = try? JSONDecoder().decode([Todo].self, from: data) {
-                        self.todos = decoded
+                    do {
+                        let decoded = try JSONDecoder().decode(TodoResponse.self, from: data)
+                        self.todos = decoded.todos
                         self.message = ""
-                    } else {
-                        self.message = "Failed to load todos."
+                        print("✅ Loaded \(decoded.todos.count) todos")
+                    } catch {
+                        self.message = "❌ Failed to load todos"
+                        print("❌ Decode error: \(error)")
+                        if let raw = String(data: data, encoding: .utf8) {
+                            print("Raw JSON:", raw)
+                        }
                     }
                 } else if let error = error {
-                    self.message = "Error: \(error.localizedDescription)"
+                    self.message = "❌ Network error: \(error.localizedDescription)"
+                    print("❌ Request error: \(error)")
                 }
             }
         }.resume()
     }
+
 
     
     // MARK: - Update Title/Description

@@ -2,10 +2,21 @@
 import Foundation
 
 class LoginViewModel: ObservableObject {
+   // var todoViewModel: TodoViewModel?
     @Published var message: String = ""
+    
 
     // Login method with session injected
-    func loginUser(email: String, password: String, session: UserSession) {
+    func loginUser(
+        email: String,
+        password: String,
+        session: UserSession,
+        todoViewModel: TodoViewModel,
+        onSuccess: @escaping () -> Void
+        
+    )
+    
+    {
         guard let url = URL(string: "https://todoapi-w1mn.onrender.com/users/login") else { return }
 
         let body = ["email": email, "password": password]
@@ -30,7 +41,12 @@ class LoginViewModel: ObservableObject {
                         session.userId = decoded.user._id
                         session.username = decoded.user.username
                         session.email = decoded.user.email
+                        
+                      //  todoViewModel.fetchTodos(for: session.userId)
+                        
                         session.isLoggedIn = true
+                        onSuccess()
+                        
                     }
                 } else {
                     DispatchQueue.main.async {

@@ -36,7 +36,7 @@ struct TaskDetailsView: View {
                                         .font(.system(size: w * 0.09,weight:.bold))
                                         .foregroundColor(.gray)
                                     Spacer()
-                                    CustomCheckBox(isChecked: $checked)
+                                    CustomCheckBox(isChecked: checked, onTap: {})
                                 }
                                 
                                 Text("Buy groceries")

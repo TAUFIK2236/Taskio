@@ -4,6 +4,7 @@ struct LoginView: View {
     
     @EnvironmentObject var session: UserSession
     @StateObject private var loginVm = LoginViewModel()
+    @StateObject private var todoVm = TodoViewModel()
 
     
     @State private var email = ""
@@ -62,9 +63,11 @@ struct LoginView: View {
                             
                             
                                 Button(action: {
-                                    loginVm.loginUser(email:email, password: password, session: session)
-                                   // navigateToHome = true
-                                }) {
+                                    loginVm.loginUser(email: email, password: password, session: session,todoViewModel: todoVm) {
+                                        todoVm.fetchTodos(for: session.userId)
+                                        navigateToHome = true
+                                    }})
+                                {
                                     Text("Sign in")
                                         .foregroundColor(.white)
                                         .frame(width: geometry.size.width * 0.85, height: geometry.size.height * 0.06)
@@ -72,7 +75,7 @@ struct LoginView: View {
                                         .cornerRadius(10)
                                 }
                                 .navigationDestination(isPresented:$navigateToHome){
-                                    HomeView(userId:" ")
+                                    HomeView1()
                                 }
                            // }
                             .padding(.vertical)
