@@ -1,6 +1,11 @@
 import SwiftUI
 
 struct LoginView: View {
+    
+    @EnvironmentObject var session: UserSession
+    @StateObject private var loginVm = LoginViewModel()
+
+    
     @State private var email = ""
     @State private var password = ""
     @State private var navigateToHome = false
@@ -57,7 +62,8 @@ struct LoginView: View {
                             
                             
                                 Button(action: {
-                                    navigateToHome = true
+                                    loginVm.loginUser(email:email, password: password, session: session)
+                                   // navigateToHome = true
                                 }) {
                                     Text("Sign in")
                                         .foregroundColor(.white)

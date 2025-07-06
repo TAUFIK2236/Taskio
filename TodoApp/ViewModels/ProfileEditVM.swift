@@ -11,6 +11,7 @@ import Foundation
 class ProfileEditViewModel: ObservableObject {
     @Published var message: String = ""
 
+    
     // MARK: - Update Username
     func updateUsername(userId: String, newUsername: String, session: UserSession) {
         guard let url = URL(string: "https://todoapi-w1mn.onrender.com/users/\(userId)/username") else { return }
@@ -45,6 +46,7 @@ class ProfileEditViewModel: ObservableObject {
             }
         }.resume()
     }
+    
 
     // MARK: - Reset Password
     func resetPassword(email: String, newPassword: String, session: UserSession) {
