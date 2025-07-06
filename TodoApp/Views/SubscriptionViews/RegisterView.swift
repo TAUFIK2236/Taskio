@@ -11,6 +11,7 @@ struct RegisterView: View {
     @State private var username = ""
     @State private var email = ""
     @State private var password = ""
+    @State private var message = ""
     @State private var navigateToHome = false
     @State private var navigateToLogin = false
 
