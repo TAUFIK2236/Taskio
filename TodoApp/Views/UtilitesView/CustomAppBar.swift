@@ -7,14 +7,20 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct CustomAppBar: View {
     let width: CGFloat
-    
+
+    // Add these closures for external actions
+    var onMenuTap: () -> Void = {}
+    var onProfileTap: () -> Void = {}
+
     var body: some View {
         HStack {
-            // Left: Menu icon
+            // Left: Drawer Button
             Button(action: {
-                // TODO: Open drawer menu
+                onMenuTap()
             }) {
                 Image(systemName: "line.3.horizontal")
                     .font(.system(size: width * 0.06))
@@ -23,21 +29,17 @@ struct CustomAppBar: View {
 
             Spacer()
 
-            // Center: Taskio logo and name
-            
-                Image("splashLogo") // your Taskio icon
-                    .resizable()
-                    .font(.system(size: width * 0.06))
-                    .foregroundColor(.black)
-                    .scaledToFill()
-                    .frame(width:width * 0.5)
-    
+            // Center: Logo
+            Image("splashLogo")
+                .resizable()
+                .scaledToFill()
+                .frame(width: width * 0.5)
 
             Spacer()
 
-            // Right: Calendar icon
+            // Right: Profile Button
             Button(action: {
-                // TODO: Open calendar or task log
+                onProfileTap()
             }) {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: width * 0.06))
@@ -45,9 +47,9 @@ struct CustomAppBar: View {
             }
         }
         .padding(.horizontal, width * 0.05)
-        .padding(.top,12)
+        .padding(.top, 12)
         .background(Color.white)
-        .ignoresSafeArea(.all,edges: .top)
+        .ignoresSafeArea(.all, edges: .top)
         .frame(height: 95)
     }
 }

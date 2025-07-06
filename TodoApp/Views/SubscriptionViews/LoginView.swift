@@ -75,7 +75,7 @@ struct LoginView: View {
                                         .cornerRadius(10)
                                 }
                                 .navigationDestination(isPresented:$navigateToHome){
-                                    HomeView1()
+                                    HomeView()
                                 }
                            // }
                             .padding(.vertical)
