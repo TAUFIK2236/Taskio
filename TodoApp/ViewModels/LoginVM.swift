@@ -31,6 +31,7 @@ class LoginViewModel: ObservableObject {
             if let error = error {
                 DispatchQueue.main.async {
                     self.message = "Error: \(error.localizedDescription)"
+                    print("Failed login 1 shared data error")
                 }
                 return
             }
@@ -51,6 +52,7 @@ class LoginViewModel: ObservableObject {
                 } else {
                     DispatchQueue.main.async {
                         self.message = "Invalid email or password"
+                        print("Failed login")
                     }
                 }
             }

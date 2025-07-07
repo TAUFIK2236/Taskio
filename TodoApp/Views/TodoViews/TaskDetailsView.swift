@@ -10,9 +10,11 @@ import SwiftUI
 struct TaskDetailsView: View {
     
     let todo: Todo
+    @EnvironmentObject var session: UserSession
+    @Environment(\.dismiss) var dismiss // for the editVIew
     @ObservedObject var todoViewModel: TodoViewModel
-    @State private var checked = false
     @State private var goEditTodoView = false
+    
     var body: some View {
         NavigationStack {
             GeometryReader { geo in
@@ -39,7 +41,9 @@ struct TaskDetailsView: View {
                                         .font(.system(size: w * 0.09,weight:.bold))
                                         .foregroundColor(.gray)
                                     Spacer()
-                                    CustomCheckBox(isChecked: checked, onTap: {})
+                                    CustomCheckBox(isChecked: todo.completed, onTap: {
+                                        todoViewModel.setTodoCompletion(todoId: todo.id, completed:!todo.completed, userId:session.userId)
+                                    })
                                 }
                                 
                                 Text("\(todo.title)")
@@ -64,6 +68,8 @@ struct TaskDetailsView: View {
                             // MARK: - Delete Icon
                             Button(action: {
                                 // TODO: Delete action
+                                todoViewModel.deleteTodo(todoId:todo.id, userId: session.userId)
+                                dismiss()
                             }) {
                                 VStack {
                                     Image(systemName: "trash")
@@ -91,7 +97,7 @@ struct TaskDetailsView: View {
                     }
                     .padding(.top,h * 0.94)
                     .navigationDestination(isPresented:$goEditTodoView) {
-                        EditTodoView(title: "Etao", description:"ddd")
+                        EditTodoView(todoId:todo.id, title:todo.title, description:todo.description, userId:session.userId)
                     }
                     
                 }
@@ -100,6 +106,6 @@ struct TaskDetailsView: View {
     }
 }
 //#Preview {
-//    TaskDetailsView(todo)
+//    TaskDetailsView(todo:Todo , todoViewModel: TodoViewModel, goEditTodoView:false)
 //}
 

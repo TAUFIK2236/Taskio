@@ -100,9 +100,47 @@ class TodoViewModel: ObservableObject {
     }
 
     
-    // MARK: - Mark as Done
-    func markTodoDone(todoId: String, userId: String) {
-        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/todos/\(todoId)/done") else { return }
+//    // MARK: - Mark as Done
+//    func markTodoDone(todoId: String, userId: String) {
+//        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/todos/\(todoId)/done") else { return }
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "PUT"
+//
+//        URLSession.shared.dataTask(with: request) { _, _, error in
+//            DispatchQueue.main.async {
+//                if let error = error {
+//                    self.message = "Mark done error: \(error.localizedDescription)"
+//                } else {
+//                    self.message = "✅ Todo marked as done"
+//                    self.fetchTodos(for: userId)
+//                }
+//            }
+//        }.resume()
+//    }
+
+//    // MARK: - Unmark as Done
+//    func unmarkTodo(todoId: String, userId: String) {
+//        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/todos/\(todoId)/undone") else { return }
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "PUT"
+//
+//        URLSession.shared.dataTask(with: request) { _, _, error in
+//            DispatchQueue.main.async {
+//                if let error = error {
+//                    self.message = "Unmark error: \(error.localizedDescription)"
+//                } else {
+//                    self.message = "❌ Todo marked as not done"
+//                    self.fetchTodos(for: userId)
+//                }
+//            }
+//        }.resume()
+//    }
+
+    func setTodoCompletion(todoId: String, completed: Bool, userId: String) {
+        let action = completed ? "done" : "undone"
+        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/todos/\(todoId)/\(action)") else { return }
 
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
@@ -110,28 +148,9 @@ class TodoViewModel: ObservableObject {
         URLSession.shared.dataTask(with: request) { _, _, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    self.message = "Mark done error: \(error.localizedDescription)"
+                    self.message = "Error: \(error.localizedDescription)"
                 } else {
-                    self.message = "✅ Todo marked as done"
-                    self.fetchTodos(for: userId)
-                }
-            }
-        }.resume()
-    }
-
-    // MARK: - Unmark as Done
-    func unmarkTodo(todoId: String, userId: String) {
-        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/todos/\(todoId)/undone") else { return }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-
-        URLSession.shared.dataTask(with: request) { _, _, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    self.message = "Unmark error: \(error.localizedDescription)"
-                } else {
-                    self.message = "❌ Todo marked as not done"
+                    self.message = completed ? " Todo marked as done" : " Todo marked as not done"
                     self.fetchTodos(for: userId)
                 }
             }

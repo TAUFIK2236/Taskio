@@ -232,7 +232,7 @@ struct HomeView: View {
     @EnvironmentObject var session: UserSession
     @StateObject private var todoVM = TodoViewModel()
     @State private var navigateProfile = false
-  //  @State private var selectedTodo: Todo?
+    @State private var selectedTodo: Todo?
 
     
     let colors: [Color] = [
@@ -320,7 +320,7 @@ struct HomeView: View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())],
                   spacing: h * 0.015) {
             ForEach(Array(todoVM.todos.enumerated()), id: \.element._id) { index, todo in
-                NavigationLink(destination:TaskDetailsView(todo: todo, todoViewModel:todoVM)) {CustomCardButton(
+                NavigationLink(destination:TaskDetailsView(todo: todo,todoViewModel:todoVM)) {CustomCardButton(
                     
                     index: index,
                     title: todo.title,
@@ -329,7 +329,7 @@ struct HomeView: View {
                     height: h * 1.14,
                     color: colors[index % colors.count],
                     isChecked: todo.completed,
-                    onCheckToggle: {}
+                    onCheckToggle: {todoVM.setTodoCompletion(todoId: todo.id, completed:!todo.completed, userId:session.userId)}
                     
                     
                 )

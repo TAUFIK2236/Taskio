@@ -9,9 +9,13 @@ import Foundation
 import SwiftUI
 
 struct EditTodoView: View {
+    @State var todoId: String
     @State var title: String
     @State var description: String
+    @State var userId: String
     @State private var goToTodoView = false
+    @StateObject var todoViewModel = TodoViewModel()
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         NavigationStack {
@@ -50,8 +54,9 @@ struct EditTodoView: View {
                     // Save Button
                    
                         Button(action: {
-                            // You could call an update API here if needed
-                            goToTodoView = true
+                            //  could call an update API here if needed
+                            todoViewModel.updateTodo(todoId:todoId, newTitle:title, newDescription:description, userId: userId)
+                           dismiss()
                         }) {
                             Text("Save")
                                 .foregroundColor(.white)
@@ -65,10 +70,7 @@ struct EditTodoView: View {
                     
                 }
                 .padding(.horizontal, w * 0.06)
-//                .navigationDestination(isPresented: $goToTodoView) {
-//                   // TaskDetailsView(todo: , todoViewModel: <#TodoViewModel#>
-//                    )
-//                }
+
             }
         }
     }
@@ -76,7 +78,8 @@ struct EditTodoView: View {
 
 #Preview {
     EditTodoView(
-        title: "Buy groceries",
-        description: "Pick up milk, eggs, bread, and vegetables from the store. Don’t forget to check if we need any other items."
+        todoId: "",title: "",
+        description: "Buy groceries",
+        userId: "Pick up milk, eggs, bread, and vegetables from the store. Don’t forget to check if we need any other items."
     )
 }
