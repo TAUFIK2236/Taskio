@@ -13,7 +13,7 @@ struct EditTodoView: View {
     @State var title: String
     @State var description: String
     @State var userId: String
-    @State private var goToTodoView = false
+  //  @State private var goToTodoView = false
     @StateObject var todoViewModel = TodoViewModel()
     @Environment(\.dismiss) var dismiss
 
@@ -23,40 +23,45 @@ struct EditTodoView: View {
                 let w = geo.size.width
                 let h = geo.size.height
 
-                VStack(alignment: .leading, spacing: h * 0.03) {
-                    Spacer().frame(height: h * 0.05)
-
-                    // Title
-                    Text("Edit Task")
-                        .font(.system(size: w * 0.07, weight: .bold))
-
-                    // Task Title Field
-                    Text("Task Title")
-                        .font(.system(size: w * 0.045))
-                    TextField("", text: $title)
-                        .padding()
-                        .frame(height: h * 0.06)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(w * 0.03)
-
-                    // Description Field
-                    Text("Description")
-                        .font(.system(size: w * 0.045))
-                    TextEditor(text: $description)
-                        .frame(height: h * 0.4)
-                        .padding(6)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(w * 0.03)
-
-                    Spacer()
-
-                    // Save Button
-                   
+                VStack(){
+                    Image("splashLogo") // Replace with your logo asset name
+                        .resizable()
+                        .scaleEffect(3)
+                        .frame(width: w * 0.18,height: h * 0.06)
+                    VStack(alignment: .leading, spacing: h * 0.03) {
+                        Spacer().frame(height: h * 0.05)
+ 
+                        // Title
+                        Text("Edit Task")
+                            .font(.system(size: w * 0.07, weight: .bold))
+                        
+                        // Task Title Field
+                        Text("Task Title")
+                            .font(.system(size: w * 0.045))
+                        TextField("", text: $title)
+                            .padding()
+                            .frame(height: h * 0.06)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(w * 0.03)
+                        
+                        // Description Field
+                        Text("Description")
+                            .font(.system(size: w * 0.045))
+                        TextEditor(text: $description)
+                            .frame(height: h * 0.4)
+                            .padding(6)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(w * 0.03)
+                        
+                        Spacer()
+                        
+                        // Save Button
+                        
                         Button(action: {
                             //  could call an update API here if needed
                             todoViewModel.updateTodo(todoId:todoId, newTitle:title, newDescription:description, userId: userId)
-                           dismiss()
+                            dismiss()
                         }) {
                             Text("Save")
                                 .foregroundColor(.white)
@@ -67,10 +72,10 @@ struct EditTodoView: View {
                                 .cornerRadius(w * 0.05)
                                 .padding(5)
                         }
-                    
+                        
+                    }
+                    .padding(.horizontal, w * 0.06)
                 }
-                .padding(.horizontal, w * 0.06)
-
             }
         }
     }

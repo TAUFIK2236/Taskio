@@ -337,14 +337,14 @@ struct HomeView: View {
                 
             }
 
-            Button {
-                // TODO: navigate to create page
-                
-            } label: {
+            NavigationLink(destination:  CreateTodoView(userId: session.userId)){
                 VStack {
                     Image(systemName: "plus")
-                        .font(.system(size: w * 0.08))
-                        .foregroundColor(.gray)
+                        .font(.system(size: w * 0.15))
+                        .foregroundColor(.blue)
+                        
+                    Text("Add Task")
+                        .font(.system(size: w * 0.04,weight: .bold))
                 }
                 .frame(height: h * 0.25)
                 .frame(maxWidth: .infinity)
@@ -352,8 +352,9 @@ struct HomeView: View {
                 .cornerRadius(w * 0.04)
                 .shadow(color: .gray.opacity(0.2), radius: w * 0.02)
                 .padding(.horizontal, w * 0.01)
-            }
-        }
+            
+                }
+                    }
         .padding(.horizontal, w * 0.02)
     }
 }

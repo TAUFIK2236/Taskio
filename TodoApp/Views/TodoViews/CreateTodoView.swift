@@ -11,7 +11,7 @@ import SwiftUI
 struct CreateTodoView: View {
     let  userId: String
     @StateObject var todoViewModel = TodoViewModel()
-    @EnvironmentObject var session: UserSession
+   // @EnvironmentObject var session: UserSession
     @Environment(\.dismiss) var dismiss
     
     @State private var title: String = ""
@@ -63,7 +63,7 @@ struct CreateTodoView: View {
                         // Save Button
                         
                         Button(action: {
-                            
+                            todoViewModel.createTodo(userId: userId, title:title, description:description)
                             dismiss()
                         }) {
                             Text("Add")
