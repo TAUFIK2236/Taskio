@@ -232,6 +232,7 @@ struct HomeView: View {
     @EnvironmentObject var session: UserSession
     @StateObject private var todoVM = TodoViewModel()
     @State private var navigateProfile = false
+  //  @State private var selectedTodo: Todo?
 
     
     let colors: [Color] = [
@@ -310,13 +311,16 @@ struct HomeView: View {
             .font(.system(size: w * 0.045, weight: .semibold))
             .padding(.horizontal, w * 0.05)
     }
+    
+    
+    
 
     // MARK: - Todo Grid View
     private func todoGrid(w: CGFloat, h: CGFloat) -> some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())],
                   spacing: h * 0.015) {
             ForEach(Array(todoVM.todos.enumerated()), id: \.element._id) { index, todo in
-                CustomCardButton(
+                NavigationLink(destination:TaskDetailsView(todo: todo, todoViewModel:todoVM)) {CustomCardButton(
                     
                     index: index,
                     title: todo.title,
@@ -325,11 +329,11 @@ struct HomeView: View {
                     height: h * 1.14,
                     color: colors[index % colors.count],
                     isChecked: todo.completed,
-                    onTap: {},
                     onCheckToggle: {}
                     
                     
                 )
+                }
                 
             }
 

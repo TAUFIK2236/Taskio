@@ -65,9 +65,10 @@ struct EditTodoView: View {
                     
                 }
                 .padding(.horizontal, w * 0.06)
-                .navigationDestination(isPresented: $goToTodoView) {
-                    TaskDetailsView()
-                }
+//                .navigationDestination(isPresented: $goToTodoView) {
+//                   // TaskDetailsView(todo: , todoViewModel: <#TodoViewModel#>
+//                    )
+//                }
             }
         }
     }

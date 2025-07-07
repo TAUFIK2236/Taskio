@@ -63,13 +63,10 @@ struct CustomCardButton: View {
     let height: CGFloat
     let color: Color
     var isChecked: Bool
-    let onTap: () -> Void
-    let onCheckToggle: () -> Void // ✅ new toggle action
+    let onCheckToggle: () -> Void // new toggle action
 
     var body: some View {
-        Button(action: {
-            onTap()
-        }) {
+
             VStack(alignment: .leading, spacing: height * 0.01) {
                 HStack {
                     CustomCheckBox(isChecked: isChecked, onTap: onCheckToggle, size: width * 0.07)
@@ -97,7 +94,6 @@ struct CustomCardButton: View {
             .background(color)
             .cornerRadius(width * 0.04)
             .shadow(color: .black.opacity(0.30), radius: 6, x: 1, y: 4)
-        }
-        .buttonStyle(PlainButtonStyle())
+
     }
 }

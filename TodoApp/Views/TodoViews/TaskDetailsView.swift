@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TaskDetailsView: View {
+    
+    let todo: Todo
+    @ObservedObject var todoViewModel: TodoViewModel
     @State private var checked = false
     @State private var goEditTodoView = false
     var body: some View {
@@ -39,7 +42,7 @@ struct TaskDetailsView: View {
                                     CustomCheckBox(isChecked: checked, onTap: {})
                                 }
                                 
-                                Text("Buy groceries")
+                                Text("\(todo.title)")
                                     .font(.system(size: w * 0.05, weight: .semibold))
                                 // .foregroundColor(.gray)
                                 
@@ -48,7 +51,7 @@ struct TaskDetailsView: View {
                                     .padding(.top, h * 0.06)
                                     .foregroundColor(.gray)
                                 
-                                Text("Pick up milk, eggs, bread, and vegetables from the store. Don’t forget to check if we need any other items.")
+                                Text("\(todo.description)")
                                     .font(.system(size: w * 0.045))
                                     .multilineTextAlignment(.leading)
                                 Spacer()
@@ -96,7 +99,7 @@ struct TaskDetailsView: View {
         }
     }
 }
-#Preview {
-    TaskDetailsView()
-}
+//#Preview {
+//    TaskDetailsView(todo)
+//}
 
