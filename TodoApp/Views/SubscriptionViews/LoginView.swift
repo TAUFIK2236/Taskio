@@ -65,7 +65,7 @@ struct LoginView: View {
                                 Button(action: {
                                     loginVm.loginUser(email: email, password: password, session: session,todoViewModel: todoVm) {
                                         todoVm.fetchTodos(for: session.userId)
-                                        navigateToHome = true
+                                    
                                     }})
                                 {
                                     Text("Sign in")

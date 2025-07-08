@@ -12,6 +12,12 @@ struct ResetPasswordView: View {
     @State private var newPassword = ""
     @State private var confirmPassword = ""
     @State private var navigateToLogin = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var navigateToHome = false
+    @EnvironmentObject var session: UserSession
+    @StateObject var profileVM = ProfileEditViewModel()
+
 
     var body: some View {
         NavigationStack {
@@ -64,9 +70,9 @@ struct ResetPasswordView: View {
                                 .padding(.bottom)
 
                             // Reset Button
-                            NavigationLink(destination: LoginView(), isActive: $navigateToLogin) {
+                        
                                 Button(action: {
-                                    navigateToLogin = true
+                                    profileVM.resetPassword(email: email, newPassword: newPassword, session: session)
                                 }) {
                                     Text("Reset Password")
                                         .foregroundColor(.white)
@@ -74,17 +80,41 @@ struct ResetPasswordView: View {
                                         .background(Color.black)
                                         .cornerRadius(10)
                                 }
-                            }
+                            
+//                            Button(action: {
+//                                profileVM.resetPassword(email: email, newPassword: newPassword, session: session) { successMessage in
+//                                    // ✅ SUCCESS: Go to Home
+//                                  
+//                                } onFailure: { errorMessage in
+//                                    // ❌ FAILURE: Show Alert
+//                                    alertMessage = errorMessage
+//                                    showAlert = true
+//                                }
+//                            }) {
+//                                Text("Reset Password")
+//                                    .foregroundColor(.white)
+//                                    .frame(width: geometry.size.width * 0.85, height: geometry.size.height * 0.06)
+//                                    .background(Color.black)
+//                                    .cornerRadius(10)
+//                            }
+//                            .alert(isPresented: $showAlert) {
+//                                Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+//                            }
+
+
+
+                            
+                            
+
                             .padding(.vertical)
                         }
 
+                        
                         // Back to Login
                         VStack(alignment: .center) {
                             Text("Remember your password?")
                                 .font(.footnote)
                                 .foregroundColor(.gray)
-
-                            NavigationLink(destination: LoginView(), isActive: $navigateToLogin) {
                                 Button(action: {
                                     navigateToLogin = true
                                 }) {
@@ -93,8 +123,8 @@ struct ResetPasswordView: View {
                                         .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.05)
                                         .background(Color.black)
                                         .cornerRadius(10)
-                                }
-                            }
+                                } .navigationDestination(isPresented: $navigateToLogin) {
+                                    LoginView()}
                         }
                     }
 

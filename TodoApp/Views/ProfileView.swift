@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var session: UserSession
+    @StateObject private var profileViewModel = ProfileEditViewModel()
+    @State private var ChangeProfile = false
+    
     var body: some View {
         GeometryReader { geo in
             let w = geo.size.width
@@ -16,8 +20,8 @@ struct ProfileView: View {
             VStack(){
                 Image("splashLogo") // Replace with your logo asset name
                     .resizable()
-                    .scaleEffect(3)
-                    .frame(width: w * 0.18,height: h * 0.06)
+                    .scaledToFit()
+                    .frame(width: w * 0.30,height: h * 0.06)
                 
                 
                 VStack(spacing: h * 0.03) {
@@ -39,13 +43,13 @@ struct ProfileView: View {
                         HStack {
                             Text("Name")
                             Spacer()
-                            Text("Your Name")
+                            Text("\(session.username)")
                         }
                         
                         HStack {
                             Text("ID")
                             Spacer()
-                            Text("123456")
+                            Text(session.userId)
                         }
                         
                         HStack {
@@ -61,7 +65,10 @@ struct ProfileView: View {
                     VStack(spacing: h * 0.015) {
                         
                         Spacer()
-                        Button(action: {}) {
+                        Button(action: {
+                         
+                            
+                        }) {
                             Text("Change Password and Name")
                                 .font(.system(size: w * 0.05, weight: .bold))
                                 .foregroundColor(.black)
@@ -69,9 +76,13 @@ struct ProfileView: View {
                                 .frame(height: h * 0.07)
                                 .background(Color.white)
                                 .overlay(RoundedRectangle(cornerRadius: w * 0.05).stroke(Color.gray.opacity(2)))
+                        }.navigationDestination(isPresented: $ChangeProfile) {
+                            TodoApp.ChangeProfile(currentName: session.username, currentPassword: "*********")
                         }
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            profileViewModel.deleteUser(userId: session.userId, session: session)
+                        }) {
                             Text("Delete Account")
                                 .font(.system(size: w * 0.06, weight: .bold))
                                 .foregroundColor(.red)
@@ -97,4 +108,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
+        .environmentObject(UserSession())
 }

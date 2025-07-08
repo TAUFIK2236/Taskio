@@ -63,9 +63,8 @@ struct RegisterView: View {
                                 .frame(width: geometry.size.width * 0.85)
                                 .padding(.bottom)
 
-                            NavigationLink(destination: HomeView(), isActive: $navigateToHome) {
                                 Button(action: {
-                                    navigateToHome = true
+                                    registerVM.registerUser(username: username, email: email, password: password, session: session)
                                 }) {
                                     Text("Register")
                                         .foregroundColor(.white)
@@ -73,7 +72,7 @@ struct RegisterView: View {
                                         .background(Color.black)
                                         .cornerRadius(10)
                                 }
-                            }
+                            
                             .padding(.vertical)
                         }
 
@@ -82,17 +81,19 @@ struct RegisterView: View {
                                 .font(.footnote)
                                 .foregroundColor(.gray)
 
-                            NavigationLink(destination: LoginView(), isActive: $navigateToLogin) {
+ 
                                 Button(action: {
                                     navigateToLogin = true
                                 }) {
-                                    Text("Sign In")
+                                    Text("Log In")
                                         .foregroundColor(.white)
                                         .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.05)
                                         .background(Color.black)
                                         .cornerRadius(10)
+                                }.navigationDestination(isPresented: $navigateToLogin){
+                                    LoginView()
                                 }
-                            }
+                            
                         }
                     }
 

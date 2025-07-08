@@ -262,20 +262,20 @@ struct HomeView: View {
                                 ProfileView()
                             }
                         ScrollView {
-                            VStack(alignment: .leading, spacing: h * 0.03) {
+                            VStack(alignment: .leading, spacing: h * 0.04) {
                                 headerView(w: w, h: h)
                                 dateView(w: w)
                                 todoGrid(w: w, h: h)
                             }
-                            .padding(.top, h * 0.025)
+                            .padding(.top, h * 0.02)
                         }
                     }
-                }
+                } .navigationBarBackButtonHidden(true) 
                 .onAppear {
                     todoVM.fetchTodos(for: session.userId)
                 
                 }
-            }
+            }.ignoresSafeArea()
         }
     }
 
@@ -332,7 +332,7 @@ struct HomeView: View {
                     onCheckToggle: {todoVM.setTodoCompletion(todoId: todo.id, completed:!todo.completed, userId:session.userId)}
                     
                     
-                )
+                 )
                 }
                 
             }

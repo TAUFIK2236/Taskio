@@ -26,9 +26,8 @@ struct CreateTodoView: View {
                 VStack(){
                     Image("splashLogo") // Replace with your logo asset name
                         .resizable()
-                        .scaleEffect(3)
-                        .frame(width: w * 0.18,height: h * 0.06)
-                    
+                        .scaledToFit()
+                        .frame(width: w * 0.30,height: h * 0.06)
                     
                     
                     VStack(alignment: .leading, spacing: h * 0.02) {
