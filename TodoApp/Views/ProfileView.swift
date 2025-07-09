@@ -66,7 +66,7 @@ struct ProfileView: View {
                         
                         Spacer()
                         Button(action: {
-                         
+                            ChangeProfile = true
                             
                         }) {
                             Text("Change Password and Name")
