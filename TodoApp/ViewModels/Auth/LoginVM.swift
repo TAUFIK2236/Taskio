@@ -52,7 +52,11 @@ class LoginViewModel: ObservableObject {
                 } else {
                     DispatchQueue.main.async {
                         self.message = "Invalid email or password"
-                        print("Failed login")
+                        if let raw  = String(data : data,encoding: .utf8){
+                            print("Raw login Response : \(raw)")
+                        }
+                            
+                        print("Decode error : ",error)
                     }
                 }
             }

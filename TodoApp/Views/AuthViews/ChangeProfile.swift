@@ -61,6 +61,7 @@ struct ChangeProfile: View {
                         Button(action: {
                             profileVM.updateUsername(userId:sesssion.userId, newUsername:currentName, session: sesssion)
                             profileVM.resetPassword(email: sesssion.email, newPassword:newPassword, session: sesssion)
+                            dismiss()
                         }) {
                             Text("Save")
                                 .foregroundColor(.white)

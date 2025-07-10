@@ -58,7 +58,7 @@ struct LoginView: View {
                                     .padding(.bottom)
                             }
                             .navigationDestination(isPresented: $navigateToReset){
-                                RegisterView()
+                                ResetPasswordView()
                             }
                             
                             

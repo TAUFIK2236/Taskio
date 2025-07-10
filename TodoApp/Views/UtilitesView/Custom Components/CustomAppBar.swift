@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftUI
 
 struct CustomAppBar: View {
+    
     let width: CGFloat
     
     // Add these closures for external actions
@@ -55,8 +56,7 @@ struct CustomAppBar: View {
  
             Spacer()
                 .frame(height: 10)
-          //  .ignoresSafeArea(.all, edges: .top)
-          //  .frame(height: 100)
+
         }
         .ignoresSafeArea(.all, edges: .top)
         .background(Color.white)
