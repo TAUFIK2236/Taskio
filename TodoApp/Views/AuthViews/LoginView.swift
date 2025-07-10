@@ -16,7 +16,7 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
-                ScrollView {
+                ZStack {
                     VStack(spacing: geometry.size.height * 0.02) {
                         Spacer(minLength: geometry.size.height * 0.03)
 
@@ -101,19 +101,32 @@ struct LoginView: View {
                                 .navigationDestination(isPresented:$navigateToRegister) {
                                     RegisterView()
                                 }
-                          
+                            Spacer(minLength: geometry.size.height * 0.5)
                         }
+
                         
                         
                     }
-
-                    Spacer(minLength: geometry.size.height * 0.1)
-                        .navigationBarBackButtonHidden(true) 
+                    .navigationBarBackButtonHidden(true)
+                    if loginVm.isLoading{
+                        LoadingOverlay()
+                    }
                 }
+                
+                
                 .frame(width: geometry.size.width)
-                .ignoresSafeArea(.keyboard)
-            }
+
+            }.ignoresSafeArea(.keyboard)
             .background(Color.white)
+        }.alert(isPresented:Binding<Bool>(
+            get:{!loginVm.message.isEmpty},
+            set:{ _ in loginVm.message = "" }
+        )){
+            Alert(title:Text("Login Faild"),
+                  message: Text(loginVm.message),
+                  dismissButton:.default(Text("Try Again"))
+            )
+            
         }
     }
 }
