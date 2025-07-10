@@ -48,7 +48,7 @@ struct LoginView: View {
                                 .frame(width: geometry.size.width * 0.85)
                                 .padding(.bottom)
 
-                          //  NavigationLink(destination: HomeView(userId: ""), isActive: $navigateToHome) {
+             
                             Button(action:{
                                 navigateToReset = true
                             }){
@@ -77,7 +77,7 @@ struct LoginView: View {
                                 .navigationDestination(isPresented:$navigateToHome){
                                     HomeView()
                                 }
-                           // }
+                         
                             .padding(.vertical)
                         }
                         
@@ -88,7 +88,7 @@ struct LoginView: View {
                                 .font(.footnote)
                                 .foregroundColor(.gray)
 
-                        //    NavigationLink(destination: RegisterView(), isActive: $navigateToRegister) {
+                   
                                 Button(action: {
                                     navigateToRegister = true
                                 }) {
@@ -101,7 +101,7 @@ struct LoginView: View {
                                 .navigationDestination(isPresented:$navigateToRegister) {
                                     RegisterView()
                                 }
-                           // }
+                          
                         }
                         
                         

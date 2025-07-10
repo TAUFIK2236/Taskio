@@ -2,7 +2,7 @@
 import Foundation
 
 class LoginViewModel: ObservableObject {
-   // var todoViewModel: TodoViewModel?
+   
     @Published var message: String = ""
     
 
@@ -43,7 +43,7 @@ class LoginViewModel: ObservableObject {
                         session.username = decoded.user.username
                         session.email = decoded.user.email
                         
-                      //  todoViewModel.fetchTodos(for: session.userId)
+               
                         
                         session.isLoggedIn = true
                         onSuccess()

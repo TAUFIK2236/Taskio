@@ -12,6 +12,7 @@ struct TodoAppApp: App {
                 NavigationView {
                     HomeView()
                 }.environmentObject(session)
+                   
             }else{
                 NavigationView {
                     SplashView()
