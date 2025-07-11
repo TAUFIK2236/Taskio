@@ -1,16 +1,11 @@
-//
-//  ProfileEditVM.swift
-//  TodoApp
-//
-//  Created by Anika Tabasum on 7/5/25.
-//
+
 
 import Foundation
 import Foundation
 
 class ProfileEditViewModel: ObservableObject {
     @Published var message: String = ""
-
+    @Published var isLoading = false
     
     // MARK: - Update Username
     func updateUsername(userId: String, newUsername: String, session: UserSession) {
@@ -47,13 +42,21 @@ class ProfileEditViewModel: ObservableObject {
         }.resume()
     }
     
-
-    // MARK: - Reset Password
+//-------------------------------------------------------------------------------------------
     func resetPassword(email: String, newPassword: String, session: UserSession) {
-        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/users/reset-password") else { return }
+        isLoading = true
+        message = ""
+
+        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/users/reset-password") else {
+            isLoading = false
+            return
+        }
 
         let body = ["email": email, "password": newPassword]
-        guard let jsonData = try? JSONEncoder().encode(body) else { return }
+        guard let jsonData = try? JSONEncoder().encode(body) else {
+            isLoading = false
+            return
+        }
 
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
@@ -61,30 +64,32 @@ class ProfileEditViewModel: ObservableObject {
         request.httpBody = jsonData
 
         URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.message = "Error: \(error.localizedDescription)"
-                }
-                return
-            }
+            DispatchQueue.main.async {
+                self.isLoading = false  // stop loading when API responds
 
-            if let data = data {
+                if let error = error {
+                    self.message = "Error: \(error.localizedDescription)"
+                    return
+                }
+
+                guard let data = data else {
+                    self.message = "No response from server."
+                    return
+                }
+
                 if let decoded = try? JSONDecoder().decode(ResetPasswordResponse.self, from: data) {
-                    DispatchQueue.main.async {
-                        session.userId = decoded.user._id
-                        session.username = decoded.user.username
-                        session.email = decoded.user.email
-                        session.isLoggedIn = true
-                        self.message = "Password updated!"
-                    }
+                    session.userId = decoded.user._id
+                    session.username = decoded.user.username
+                    session.email = decoded.user.email
+                    session.isLoggedIn = true
+                    self.message = "Password updated!"
                 } else {
-                    DispatchQueue.main.async {
-                        self.message = "Failed to reset password :"
-                    }
+                    self.message = "Failed to reset password."
                 }
             }
         }.resume()
     }
+//----------------------------------------------------------------------------------------------
     
     
 //    func resetPassword(email: String, newPassword: String, session: UserSession, onSuccess: @escaping (String) -> Void, onFailure: @escaping (String) -> Void) {

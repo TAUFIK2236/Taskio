@@ -7,17 +7,17 @@ struct LoadingOverlay: View {
     var onFinish: () -> Void = { }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment:.top) {
             Color.white.ignoresSafeArea()
-            VStack(spacing: 40){
+            VStack(spacing: 200){
                 Image("splashLogo") // your PNG file in Assets
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)
                     .scaleEffect(scale)
 
-
-                ColorChangingSpinner()
+              //  Spacer()
+                ColorChangingSpinner().padding(.bottom,60)
                 
             }
         }

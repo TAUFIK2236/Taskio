@@ -18,7 +18,7 @@ struct LoginView: View {
             GeometryReader { geometry in
                 ZStack {
                     VStack(spacing: geometry.size.height * 0.02) {
-                        Spacer(minLength: geometry.size.height * 0.03)
+                        Spacer(minLength: geometry.size.height * 0.10)
 
                         Image("splashLogo")
                             .resizable()
@@ -108,6 +108,7 @@ struct LoginView: View {
                         
                     }
                     .navigationBarBackButtonHidden(true)
+                    
                     if loginVm.isLoading{
                         LoadingOverlay()
                     }
