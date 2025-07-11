@@ -11,6 +11,7 @@ import Foundation
 class TodoViewModel: ObservableObject {
     @Published var todos: [Todo] = []
     @Published var message: String = ""
+    @Published var isLoading = false
 
     
     
@@ -29,9 +30,11 @@ class TodoViewModel: ObservableObject {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        self.isLoading  = true
 
         URLSession.shared.dataTask(with: request) { data, _, error in
             DispatchQueue.main.async {
+                self.isLoading = false
                 if let error = error {
                     self.message = "Error: \(error.localizedDescription)"
                 } else {
@@ -57,15 +60,15 @@ class TodoViewModel: ObservableObject {
                         self.message = ""
                         print("✅ Loaded \(decoded.todos.count) todos")
                     } catch {
-                        self.message = "❌ Failed to load todos"
-                        print("❌ Decode error: \(error)")
+                        self.message = " Failed to load todos"
+                        print(" Decode error: \(error)")
                         if let raw = String(data: data, encoding: .utf8) {
                             print("Raw JSON:", raw)
                         }
                     }
                 } else if let error = error {
-                    self.message = "❌ Network error: \(error.localizedDescription)"
-                    print("❌ Request error: \(error)")
+                    self.message = " Network error: \(error.localizedDescription)"
+                    print(" Request error: \(error)")
                 }
             }
         }.resume()

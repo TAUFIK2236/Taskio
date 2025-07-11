@@ -112,6 +112,26 @@ struct LoginView: View {
                     if loginVm.isLoading{
                         LoadingOverlay()
                     }
+                    if !loginVm.message.isEmpty {
+                         ZStack {
+                             CustomAlertCard(
+                                 message: loginVm.message,
+                                 primaryButtonTitle: "OK",
+                                 secondaryButtonTitle: "Try Again",
+                                 primaryAction: {
+                                     loginVm.message = ""
+                                 },
+                                 secondaryAction: {
+                                     loginVm.message = ""
+                                     // Optionally fields if needed to empty name and others
+                                 }
+                             )
+                             
+                         }
+                         .padding(.bottom, 300)
+                         .transition(.move(edge: .top).combined(with: .opacity))
+                         .animation(.easeInOut(duration: 0.3), value: loginVm.message)
+                     }
                 }
                 
                 
@@ -119,15 +139,6 @@ struct LoginView: View {
 
             }.ignoresSafeArea(.keyboard)
             .background(Color.white)
-        }.alert(isPresented:Binding<Bool>(
-            get:{!loginVm.message.isEmpty},
-            set:{ _ in loginVm.message = "" }
-        )){
-            Alert(title:Text("Login Faild"),
-                  message: Text(loginVm.message),
-                  dismissButton:.default(Text("Try Again"))
-            )
-            
         }
     }
 }

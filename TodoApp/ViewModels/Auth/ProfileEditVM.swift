@@ -9,10 +9,18 @@ class ProfileEditViewModel: ObservableObject {
     
     // MARK: - Update Username
     func updateUsername(userId: String, newUsername: String, session: UserSession) {
-        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/users/\(userId)/username") else { return }
+        
+        isLoading = true
+        
+        guard let url = URL(string: "https://todoapi-w1mn.onrender.com/users/\(userId)/username") else {
+            isLoading = false
+            return }
 
         let body = ["username": newUsername]
-        guard let jsonData = try? JSONEncoder().encode(body) else { return }
+        guard let jsonData = try? JSONEncoder().encode(body) else {
+            isLoading = false
+            return
+        }
 
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
@@ -22,6 +30,7 @@ class ProfileEditViewModel: ObservableObject {
         URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 DispatchQueue.main.async {
+                    self.isLoading = false
                     self.message = "Error: \(error.localizedDescription)"
                 }
                 return

@@ -98,26 +98,37 @@ struct RegisterView: View {
                             Spacer(minLength: geometry.size.height * 0.1)
                         }
                         
-                 
+                    if registerVM.isLoading{
+                        LoadingOverlay()
+                       }
+
+                    if !registerVM.message.isEmpty {
+                         ZStack {
+                             CustomAlertCard(
+                                message: registerVM.message,
+                                 primaryButtonTitle: "OK",
+                                 secondaryButtonTitle: "Try Again",
+                                 primaryAction: {
+                                     registerVM.message = ""
+                                 },
+                                 secondaryAction: {
+                                     registerVM.message = ""
+                                     // Optionally reset fields if needed
+
+                                 }
+                             )
+                             Spacer()
+                         }
+                         .padding(.top, 400)
+                         .transition(.move(edge: .top).combined(with: .opacity))
+                         .animation(.easeInOut(duration: 0.3), value: registerVM.message)
+                     }
                     }
                     .frame(width: geometry.size.width)
                     .ignoresSafeArea(.keyboard)
                     .navigationBarBackButtonHidden(true)
-             
-                if registerVM.isLoading{
-                    LoadingOverlay()
-                   }
                 }
                 .background(Color.white)
-            }.alert(isPresented:Binding<Bool>(
-                get:{!registerVM.message.isEmpty},
-                set:{ _ in registerVM.message = "" }
-            )){
-                Alert(title:Text("Creating Account Faild"),
-                      message: Text(registerVM.message),
-                      dismissButton:.default(Text("Try Again"))
-                )
-                
             }
         }
     }

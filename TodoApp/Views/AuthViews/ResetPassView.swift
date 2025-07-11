@@ -112,6 +112,32 @@ struct ResetPasswordView: View {
                     if profileVM.isLoading{
                         LoadingOverlay()
                     }
+                    if !profileVM.message.isEmpty {
+                        ZStack {
+                            CustomAlertCard(
+                                message: profileVM.message,
+                                primaryButtonTitle: "OK",
+                                secondaryButtonTitle: "Try Again",
+                                primaryAction: {
+                                    profileVM.message = ""
+                                    // Optional: navigateToLogin = true
+                                },
+                                secondaryAction: {
+                                    profileVM.message = ""
+                                    email = ""
+                                    newPassword=""
+                                    confirmPassword = ""
+                                    
+                                })
+                               
+                            
+                           
+                        }
+                        .padding(.bottom, 400)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .animation(.easeInOut, value: profileVM.message)
+                        
+                    }
                 }
                 
                 .frame(width: geometry.size.width)
@@ -120,31 +146,7 @@ struct ResetPasswordView: View {
             .background(Color.white)
             
             
-            if !profileVM.message.isEmpty {
-                VStack {
-                    CustomAlertCard(
-                        message: profileVM.message,
-                        primaryButtonTitle: "OK",
-                        secondaryButtonTitle: "Try Again",
-                        primaryAction: {
-                            profileVM.message = ""
-                            // Optional: navigateToLogin = true
-                        },
-                        secondaryAction: {
-                            profileVM.message = ""
-                            email = ""
-                            newPassword=""
-                            confirmPassword = ""
-                            
-                        })
-                       
-                    
-                    Spacer()
-                }
-                .transition(.move(edge: .top).combined(with: .opacity))
-                .animation(.easeInOut, value: profileVM.message)
-                
-            }
+ 
         }
     }
         
