@@ -105,6 +105,7 @@ struct RegisterView: View {
                     if !registerVM.message.isEmpty {
                          ZStack {
                              CustomAlertCard(
+                                Atitle:"Sorry !", textColor:.purple,
                                 message: registerVM.message,
                                  primaryButtonTitle: "OK",
                                  secondaryButtonTitle: "Try Again",

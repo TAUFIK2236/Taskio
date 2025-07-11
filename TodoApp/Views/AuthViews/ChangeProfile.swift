@@ -83,6 +83,7 @@ struct ChangeProfile: View {
                     if !profileVM.message.isEmpty {
                          ZStack {
                              CustomAlertCard(
+                                Atitle:"Sorry!", textColor:.purple,
                                  message: profileVM.message,
                                  primaryButtonTitle: "OK",
                                  secondaryButtonTitle: "Try Again",

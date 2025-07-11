@@ -12,6 +12,8 @@ class TodoViewModel: ObservableObject {
     @Published var todos: [Todo] = []
     @Published var message: String = ""
     @Published var isLoading = false
+    @Published var ShowSuccessToast = false
+    @Published var toastMessage:String = ""
 
     
     
@@ -31,15 +33,20 @@ class TodoViewModel: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         self.isLoading  = true
+        self.ShowSuccessToast = false
 
         URLSession.shared.dataTask(with: request) { data, _, error in
             DispatchQueue.main.async {
                 self.isLoading = false
+                
+                
                 if let error = error {
                     self.message = "Error: \(error.localizedDescription)"
                 } else {
-                    self.message = "Todo created!"
+                   // self.message = "Task created!"
                     self.fetchTodos(for: userId) // refresh list
+                    self.ShowSuccessToast = true
+                    self.toastMessage = "Task created successfully"
                 }
             }
         }.resume()
@@ -58,7 +65,7 @@ class TodoViewModel: ObservableObject {
                         let decoded = try JSONDecoder().decode(TodoResponse.self, from: data)
                         self.todos = decoded.todos
                         self.message = ""
-                        print("✅ Loaded \(decoded.todos.count) todos")
+                        print("Loaded \(decoded.todos.count) todos")
                     } catch {
                         self.message = " Failed to load todos"
                         print(" Decode error: \(error)")

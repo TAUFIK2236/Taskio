@@ -2,19 +2,22 @@
 import SwiftUI
 
 struct CustomAlertCard: View {
-    let message: String
-    let primaryButtonTitle: String
-    let secondaryButtonTitle: String
-    let primaryAction: () -> Void
-    let secondaryAction: () -> Void
+    var Atitle: String
+    var textColor:Color
+    var message: String
+    var primaryButtonTitle: String
+    var secondaryButtonTitle: String
+    var primaryAction: () -> Void
+    var secondaryAction: () -> Void
+   
 
     var body: some View {
         VStack(spacing: 16) {
             Text("Alert")
                 .font(.headline)
-                .foregroundColor(.black)
+                .foregroundColor(textColor)
 
-            Text(message)
+            Text(Atitle)
                 .font(.subheadline)
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
@@ -53,5 +56,5 @@ struct CustomAlertCard: View {
 }
 
 #Preview {
-    CustomAlertCard(message: "", primaryButtonTitle: "", secondaryButtonTitle: "", primaryAction:{}, secondaryAction: {})
+    CustomAlertCard(Atitle:"",textColor:.accentColor,message: "", primaryButtonTitle: "", secondaryButtonTitle: "", primaryAction:{}, secondaryAction: {})
 }

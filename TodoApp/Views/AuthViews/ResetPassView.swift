@@ -115,6 +115,7 @@ struct ResetPasswordView: View {
                     if !profileVM.message.isEmpty {
                         ZStack {
                             CustomAlertCard(
+                                Atitle:"Sorry !", textColor:.purple,
                                 message: profileVM.message,
                                 primaryButtonTitle: "OK",
                                 secondaryButtonTitle: "Try Again",
@@ -133,7 +134,7 @@ struct ResetPasswordView: View {
                             
                            
                         }
-                        .padding(.bottom, 400)
+                        .padding(.bottom, 300)
                         .transition(.move(edge: .top).combined(with: .opacity))
                         .animation(.easeInOut, value: profileVM.message)
                         

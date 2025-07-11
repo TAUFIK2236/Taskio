@@ -115,6 +115,7 @@ struct LoginView: View {
                     if !loginVm.message.isEmpty {
                          ZStack {
                              CustomAlertCard(
+                                Atitle:"Sorry!", textColor:.purple,
                                  message: loginVm.message,
                                  primaryButtonTitle: "OK",
                                  secondaryButtonTitle: "Try Again",

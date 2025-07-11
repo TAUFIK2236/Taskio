@@ -268,13 +268,39 @@ struct HomeView: View {
                                 todoGrid(w: w, h: h)
                             }
                             .padding(.top, h * 0.02)
+                            Spacer()
+                                .frame(height:40 )
                         }
                     }
-                } .navigationBarBackButtonHidden(true) 
-                .onAppear {
-                    todoVM.fetchTodos(for: session.userId)
-                
+//                    if !todoVM.toastMessage.isEmpty {
+//                        VStack {
+//                            Spacer()
+//                            CustomToast(
+//                                icon: "checkmark.circle.fill",
+//                                message: todoVM.toastMessage,
+//                                background: Color.white,
+//                                textColor: .green,
+//                                iconColor: .green
+//                            )
+//                            .transition(.move(edge: .bottom).combined(with: .opacity))
+//                            .animation(.easeInOut(duration: 0.3), value: todoVM.toastMessage)
+//                        }
+//                        .padding(.bottom, 40)
+//                    }
+
+                } .navigationBarBackButtonHidden(true)
+                    .onAppear {
+                        todoVM.fetchTodos(for: session.userId)
                 }
+//                .onChange(of: todoVM.toastMessage) { newValue in
+//                        if !newValue.isEmpty {
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                                todoVM.toastMessage = ""
+//                            }
+//                        }
+//                    }
+
+                
             }.ignoresSafeArea()
         }
     }

@@ -9,11 +9,13 @@ import SwiftUI
 
 struct TaskDetailsView: View {
     
+    
     let todo: Todo
     @EnvironmentObject var session: UserSession
     @Environment(\.dismiss) var dismiss // for the editVIew
     @ObservedObject var todoViewModel: TodoViewModel
     @State private var goEditTodoView = false
+    @State private var showDeleteAlert = false
     
     var body: some View {
         NavigationStack {
@@ -68,8 +70,10 @@ struct TaskDetailsView: View {
                             // MARK: - Delete Icon
                             Button(action: {
                                 // TODO: Delete action
-                                todoViewModel.deleteTodo(todoId:todo.id, userId: session.userId)
-                                dismiss()
+                                showDeleteAlert = true
+                                //here add new bol button
+//                                todoViewModel.deleteTodo(todoId:todo.id, userId: session.userId)
+//                                dismiss()
                             }) {
                                 VStack {
                                     Image(systemName: "trash")
@@ -92,14 +96,37 @@ struct TaskDetailsView: View {
                             print("Add tapped")
                             goEditTodoView = true
                         }.padding(.horizontal)
-                        
-                        
                     }
                     .padding(.top,h * 0.94)
                     .navigationDestination(isPresented:$goEditTodoView) {
                         EditTodoView(todoId:todo.id, title:todo.title, description:todo.description, userId:session.userId)
                     }
-                    
+                    //-------------------------
+                    if showDeleteAlert {
+                        ZStack {
+                            Color.black.opacity(0.4).ignoresSafeArea()
+                            
+                            CustomAlertCard(
+                                Atitle:"Delete",
+                                textColor: .red,
+                                message: "Are you sure?",
+                                primaryButtonTitle: "Yes",
+                                secondaryButtonTitle: "No",
+                                primaryAction: {
+                                    todoViewModel.deleteTodo(todoId: todo.id, userId: session.userId)
+                                    showDeleteAlert = false
+                                    dismiss()
+                                },
+                                secondaryAction: {
+                                    showDeleteAlert = false
+                                }
+                            )
+                            .frame(maxWidth: 300)
+                            .padding()
+                            .transition(.scale.combined(with: .opacity))
+                            .animation(.easeInOut(duration: 0.3), value: showDeleteAlert)
+                        }
+                    }
                 }
             }
         }
