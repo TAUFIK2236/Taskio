@@ -233,6 +233,8 @@ struct HomeView: View {
     @StateObject private var todoVM = TodoViewModel()
     @State private var navigateProfile = false
     @State private var selectedTodo: Todo?
+    @State private var showDrawer = false
+    @State private var showLogoutAlert = false
 
     
     let colors: [Color] = [
@@ -245,6 +247,7 @@ struct HomeView: View {
     ]
 
     var body: some View {
+        
         NavigationStack {
             GeometryReader { geo in
                 let w = geo.size.width
@@ -254,7 +257,10 @@ struct HomeView: View {
                     Color(red: 0.95, green: 0.97, blue: 1.0).edgesIgnoringSafeArea(.all)
 
                     VStack(spacing: 0) {
-                        CustomAppBar(width: w,onProfileTap: {
+                        CustomAppBar(
+                            width: w,
+                            onMenuTap: { showDrawer.toggle() },
+                            onProfileTap: {
                             navigateProfile = true
                         })
                             .shadow(radius: 10)
@@ -271,6 +277,43 @@ struct HomeView: View {
                             Spacer()
                                 .frame(height:40 )
                         }
+                    }
+                    .blur(radius: showDrawer ? 8 : 0)
+
+                    // Drawer + dim background
+                    if showDrawer {
+                        Color.black.opacity(0.15)
+                           // .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation {
+                                    showDrawer = false
+                                }
+                            }
+
+                        SideDrawerView(
+                            isOpen: $showDrawer,
+                            onLogout: { showLogoutAlert = true },
+                            onExit: { exit(0) }
+                        )
+                        .padding(.top,h * 0.1)
+                    }
+                    if showLogoutAlert{
+                        CustomAlertCard(
+                            Atitle:"Log Out",
+                            textColor: .orange,
+                            message:"Are you sure ? ",
+                            primaryButtonTitle:"Yes",
+                            secondaryButtonTitle:"No",
+                            primaryAction:{
+                                session.userId = ""
+                                session.username = ""
+                                session.email = ""
+                                session.isLoggedIn = false
+                        } , secondaryAction:{
+                            showLogoutAlert = false
+                        }
+                            
+                        )
                     }
 //                    if !todoVM.toastMessage.isEmpty {
 //                        VStack {

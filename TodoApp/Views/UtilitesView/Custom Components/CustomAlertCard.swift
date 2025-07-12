@@ -13,11 +13,11 @@ struct CustomAlertCard: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Alert")
+            Text(Atitle)
                 .font(.headline)
                 .foregroundColor(textColor)
 
-            Text(Atitle)
+            Text(message)
                 .font(.subheadline)
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)

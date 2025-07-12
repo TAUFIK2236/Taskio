@@ -6,9 +6,9 @@ struct SplashView: View {
     @State private var opacity = 0.0
 
     var body: some View {
-        if isActive {
-            LoginView()
-        } else {
+//        if isActive {
+//            LoginView()
+//        } else {
             ZStack {
                 Color(red: 0.96, green: 0.93, blue: 0.89) // creamy background
                     .ignoresSafeArea()
@@ -32,6 +32,6 @@ struct SplashView: View {
                         }
                     }
             }
-        }
+        
     }
 }

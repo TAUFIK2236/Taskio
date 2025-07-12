@@ -43,7 +43,7 @@ struct ProfileView: View {
                             HStack {
                                 Text("Name")
                                 Spacer()
-                                Text("\(session.username)")
+                                Text(session.username)
                             }
                             
                             HStack {

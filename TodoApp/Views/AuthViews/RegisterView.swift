@@ -118,9 +118,9 @@ struct RegisterView: View {
 
                                  }
                              )
-                             Spacer()
+                            
                          }
-                         .padding(.top, 400)
+                         .padding(.bottom, 300)
                          .transition(.move(edge: .top).combined(with: .opacity))
                          .animation(.easeInOut(duration: 0.3), value: registerVM.message)
                      }

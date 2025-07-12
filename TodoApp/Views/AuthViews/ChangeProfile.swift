@@ -49,7 +49,7 @@ struct ChangeProfile: View {
                                 .font(.system(size: w * 0.07, weight: .bold))
                             Text("New Password")
                                 .font(.system(size: w * 0.045))
-                            TextField("", text: $currentPassword)
+                            SecureField("", text: $currentPassword)
                                 .padding()
                                 .frame(height: h * 0.07)
                                 .frame(maxWidth: .infinity)
@@ -61,7 +61,7 @@ struct ChangeProfile: View {
                             Button(action: {
                                 profileVM.updateUsername(userId:sesssion.userId, newUsername:currentName, session: sesssion)
                                 profileVM.resetPassword(email: sesssion.email, newPassword:newPassword, session: sesssion)
-                                dismiss()
+                                
                             }) {
                                 Text("Save")
                                     .foregroundColor(.white)
@@ -77,33 +77,33 @@ struct ChangeProfile: View {
                         .padding(.horizontal, w * 0.06)
                     }
                     .padding(.vertical, w * 0.06)
-                    if profileVM.isLoading{
-                        LoadingOverlay()
-                    }
-                    if !profileVM.message.isEmpty {
-                         ZStack {
-                             CustomAlertCard(
-                                Atitle:"Sorry!", textColor:.purple,
-                                 message: profileVM.message,
-                                 primaryButtonTitle: "OK",
-                                 secondaryButtonTitle: "Try Again",
-                                 primaryAction: {
-                                     profileVM.message = ""
-                                 },
-                                 secondaryAction: {
-                                     profileVM.message = ""
-                                     // Optionally reset fields if needed
-                                     currentName = ""
-                                     currentPassword = ""
-                                     newPassword = ""
-                                 }
-                             )
-                             Spacer()
-                         }
-                         .padding(.top, 100)
-                         .transition(.move(edge: .top).combined(with: .opacity))
-                         .animation(.easeInOut(duration: 0.3), value: profileVM.message)
-                     }
+//                    if profileVM.isLoading{
+//                        LoadingOverlay()
+//                    }
+//                    if !profileVM.message.isEmpty {
+//                         ZStack {
+//                             CustomAlertCard(
+//                                Atitle:"Sorry!", textColor:.purple,
+//                                 message: profileVM.message,
+//                                 primaryButtonTitle: "OK",
+//                                 secondaryButtonTitle: "Try Again",
+//                                 primaryAction: {
+//                                     profileVM.message = ""
+//                                 },
+//                                 secondaryAction: {
+//                                     profileVM.message = ""
+//                                     // Optionally reset fields if needed
+//                                     currentName = ""
+//                                     currentPassword = ""
+//                                     newPassword = ""
+//                                 }
+//                             )
+//                             Spacer()
+//                         }
+//                         .padding(.top, 100)
+//                         .transition(.move(edge: .top).combined(with: .opacity))
+//                         .animation(.easeInOut(duration: 0.3), value: profileVM.message)
+//                     }
                 }
             }
         }
