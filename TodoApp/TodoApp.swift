@@ -29,6 +29,7 @@ struct TodoAppApp: App {
                     if session.isLoggedIn {
                         NavigationView {
                             HomeView()
+                                .preferredColorScheme(.light)
                         }
                         .environmentObject(session)
                         .environmentObject(networkMonitor)
